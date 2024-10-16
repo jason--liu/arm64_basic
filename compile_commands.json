@@ -1,0 +1,58 @@
+[
+    {
+        "arguments": [
+            "cc",
+            "-c",
+            "-O0",
+            "-g",
+            "-fno-builtin",
+            "-o",
+            "print.o",
+            "print.c"
+        ],
+        "directory": "/work/arm64/arm64_basic",
+        "file": "print.c"
+    },
+    {
+        "arguments": [
+            "cc",
+            "-c",
+            "-O0",
+            "-g",
+            "-fno-builtin",
+            "-o",
+            "startup.o",
+            "startup.s"
+        ],
+        "directory": "/work/arm64/arm64_basic",
+        "file": "startup.s"
+    },
+    {
+        "arguments": [
+            "cc",
+            "-c",
+            "-O0",
+            "-g",
+            "-fno-builtin",
+            "-o",
+            "main.o",
+            "main.c"
+        ],
+        "directory": "/work/arm64/arm64_basic",
+        "file": "main.c"
+    },
+    {
+        "arguments": [
+            "cc",
+            "-c",
+            "-O0",
+            "-g",
+            "-fno-builtin",
+            "-o",
+            "uart.o",
+            "uart.c"
+        ],
+        "directory": "/work/arm64/arm64_basic",
+        "file": "uart.c"
+    }
+]
