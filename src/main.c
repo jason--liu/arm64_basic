@@ -1,6 +1,4 @@
-
-void uart_init(void);
-void printf(const char *fmt, ...);
+#include "uart.h"
 
 int main()
 {
@@ -8,7 +6,7 @@ int main()
 	/* a = 1; */
 	/* b = a + 4; */
 	uart_init();
-	printf("Hello World.\n");
+	uart_send_string("Hello World.\n");
 
 	return 0;
 }

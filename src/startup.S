@@ -1,5 +1,4 @@
-.section .text
-.global main
+.section .text.boot
 .global _start
 
 
@@ -25,7 +24,7 @@ clear_bss:
 done_bss:
     bl main
 proc_hang:
-    wfi
+//    wfi
     b   proc_hang
 
 
