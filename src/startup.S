@@ -23,8 +23,9 @@ clear_bss:
 
 done_bss:
     bl main
+    b proc_hang
 proc_hang:
-//    wfi
+    wfi
     b   proc_hang
 
 
