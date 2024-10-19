@@ -1,3 +1,5 @@
+#include "mm.h"
+
 .section .text.boot
 .global _start
 
@@ -9,8 +11,8 @@ _start:
     bne proc_hang
 
 _start_cpu0:
-    ldr x1,  =stack_top
-    mov sp, x1
+ //   ;; ldr x1,  =stack_top
+  //  ;; mov sp, #4096*8
 
     // clear bss
     ldr x1, =_bss_start
@@ -22,6 +24,7 @@ clear_bss:
     b clear_bss
 
 done_bss:
+    mov sp, #4096*8
     bl main
     b proc_hang
 proc_hang:
@@ -29,12 +32,12 @@ proc_hang:
     b   proc_hang
 
 
-.section .bss
-    .align 3
-stack_base:
-    .skip 0x1000
-stack_top:
-
-.section .text
-_bss_start:  .word 0
-_bss_end:  .word 0
+//;; .section .bss
+//;;     .align 3
+//;; stack_base:
+//;;     .skip 0x1000
+//;; stack_top:
+//
+//;; .section .text
+//;; _bss_start:  .word 0
+//;; _bss_end:  .word 0
