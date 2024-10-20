@@ -1,12 +1,12 @@
 #include "uart.h"
+extern void ldr_test(void);
+extern void memcpy_32bytes(void);
 
 int main()
 {
-	/* int a, b; */
-	/* a = 1; */
-	/* b = a + 4; */
 	uart_init();
 	uart_send_string("Hello World.\n");
-
+	ldr_test();
+	memcpy_32bytes();
 	return 0;
 }
