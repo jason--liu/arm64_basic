@@ -54,4 +54,4 @@ dkms.conf
 .cache/
 *.bin
 *.json
-compile_commands.json
+.tags
