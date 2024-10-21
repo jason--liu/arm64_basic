@@ -1,3 +1,31 @@
+    .global string1
+string1:
+    .string "Boot at EL"
+
+.align 3
+    .global test_data
+test_data:
+    .word 0x55
+
+.align 3
+    .type label_test, %function
+    .global label_test
+label_test:
+    /* load a huge number */
+    ldr x1, = 0xFFFFFFFFdeadbeaf
+    /* initialize register */
+    ldr x2, = (1<<0) | (1<<2) | (1<<20) | (1<<40) | (1<<55)
+
+    /* what's the difference? */
+    ldr x0, string1     // x0 is ascii code of the string
+    ldr x0, =string1    // x0 is start address of the string
+
+    /* difference? */
+    ldr x0, test_data   // loads the value stored at the memory address test_data, in this contest, x0=0x55
+    ldr x0, =test_data  // loads the address of the memory location of test_data info x1, like x0=0x80528
+    ret
+    .size label_test, (. - label_test)
+
     .type memcpy_32bytes, %function
     .global memcpy_32bytes
 memcpy_32bytes:
@@ -23,8 +51,8 @@ copy_loop:
     .global ldr_test
 
 ldr_test:
-    ldr x6, TEST_LABEL
-    ldr x7, =TEST_LABEL
+    ldr x6, TEST_LABEL  // read the value of address at (pc + label offset)
+    ldr x7, =TEST_LABEL // x7 = 0x20
 
 
     mov x2, 0x400000
