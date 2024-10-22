@@ -47,6 +47,7 @@ copy_loop:
 
 
 #define TEST_LABEL 0x20
+    /* with %function directive, you can see F in objdump output, which can be useful for debug purpose. */
     .type ldr_test, %function
     .global ldr_test
 
@@ -81,3 +82,13 @@ ldr_test:
     ldr x5, [x1, x3, lsl #3]
     ret
     .size ldr_test, (. - ldr_test)
+
+    .global mov_test
+    .type mov_test, %function
+mov_test:
+    mov x0, 1               /* 16-bits immediate nums */
+    mov x1, #0x20000
+    movz x2, #1, lsl #16    /* shift 16, 32, 46 bits */
+    ret
+    .size mov_test, (. - mov_test)
+
