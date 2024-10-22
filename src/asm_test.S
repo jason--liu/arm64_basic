@@ -92,3 +92,36 @@ mov_test:
     ret
     .size mov_test, (. - mov_test)
 
+.type add_test, %function
+    .global add_test
+add_test:
+    ldr x0, =0xffffffffffffffff
+    add x1, x0, 1  /* overflow, C flag set */
+    adc x2, xzr, xzr
+
+    /* cmp affects on C flag */
+    /* if x0 > x1, C=1 */
+    /* if x0 < x1, C=0 */
+    cmp x0, x1
+    adc x3, xzr, xzr
+
+    mov x1, #0x5
+    mov x2, #0
+    ands x3, x1, x2
+    mrs x0, nzcv /* bit31~bit28: N Z C V */
+
+    /* logical shift left */
+    mov x0, #0b00001111 // 15
+    lsl x1, x0, #2    // 15 << 2 = 60
+    /* logical shift right */
+    lsr x3, x0, #2    // 15 >> 2 = 3
+    /* arithmetic shift right */
+    mov x0, #0b11110000
+    asr x0, x0, #2   // x0 = 0b11111100
+    /* rotate right */
+    mov x0, #0b10110011
+    ror x0, x0, #3 // 0b01110110
+
+
+    ret
+    .size add_test, (. - add_test)
