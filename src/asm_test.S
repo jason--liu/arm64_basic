@@ -125,3 +125,20 @@ add_test:
 
     ret
     .size add_test, (. - add_test)
+
+.type bit_test, %function
+    .global bit_test
+bit_test:
+    // bfi xd, xn, #lsb, #width
+    // xd[lsb, width-1] = xn[0, width-1]
+    mov x1, #0x345
+    bfi x0, x1, 8, 4 // x0=0x500
+
+    // ubfx xd, xn, #lsb, #width
+    // xd[0, width-1] = xn[lsb, width-1]
+    // sbfx xd, xn, #lsb, #width
+    ldr x2, =0xdeadfeaf
+    ubfx x3, x2, 0, #16 // x3=0xfeaf
+    sbfx x4, x2, 0, #16 // x4=0xfffffffffffffeaf
+    ret
+    .size bit_test, (. - bit_test)
