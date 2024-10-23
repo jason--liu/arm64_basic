@@ -140,5 +140,26 @@ bit_test:
     ldr x2, =0xdeadfeaf
     ubfx x3, x2, 0, #16 // x3=0xfeaf
     sbfx x4, x2, 0, #16 // x4=0xfffffffffffffeaf
+
+    mrs x0, ID_AA64ISAR0_EL1
+    ubfx x0, x0, 20, 4
     ret
     .size bit_test, (. - bit_test)
+
+
+/* unsigned long csel_test(unsigned long a, unsigned b) */
+/* { */
+/* 	if (a == 0) */
+/* 		return b + 2; */
+/* 	else */
+/* 		return b - 1; */
+/* } */
+ csel_test, %function
+    .global csel_test
+csel_test:
+    add x2, x1, #2
+    sub x3, x1, #1
+    cmp x0, xzr
+    csel x0, x2, x3, eq
+    ret
+    .size csel_test, (. - csel_test)
