@@ -180,3 +180,19 @@ bl_test:
     mov x30, x3
     ret
     .size bl_test, (. - bl_test)
+
+.align 3
+    .global test_data1
+test_data1:
+    .dword 0x12345678deadbeaf
+.type adr_test, %function
+    .global adr_test
+adr_test:
+    adrp x1, init_pg_dir
+    ldr x1, test_data1
+    ldr x2, =test_data1
+    adr x3, test_data1
+    adrp x4, test_data1 // load address of the begining of the 4k memory page whick contains the label using pc-relative imme addressing.
+    add x4, x4, #:lo12:test_data1
+    ret
+    .size adr_test, (. - adr_test)

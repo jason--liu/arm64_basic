@@ -4,10 +4,11 @@ OBJCOPY = $(CROSS_COMPILE)objcopy
 CFLAGS = -O0 -g -fno-builtin -nostdlib -nostdinc -Iinclude
 ASFLAGS = -O0 -g -Iinclude
 LDFLAGS = -T linker.ld
+NAME = kernel
 
 
-TARGET = kernel.elf
-BIN = kernel.bin
+TARGET = $(NAME).elf
+BIN = $(NAME).bin
 
 SRC_DIR = src
 BUILD_DIR = build
@@ -22,7 +23,7 @@ all: $(BIN)
 
 $(TARGET): $(OBJECTS)
 #	$(CC) $(CFLAGS) -o $@ $(OBJECTS)
-	$(LD) $(LDFLAGS) -o $(TARGET) $(OBJECTS)
+	$(LD) $(LDFLAGS) -Map $(NAME).map -o $(TARGET) $(OBJECTS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@

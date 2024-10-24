@@ -7,6 +7,7 @@ extern void add_test(void);
 extern void bit_test(void);
 extern int csel_test(int a, int b);
 extern int bl_test(void);
+extern int adr_test(void);
 
 int main()
 {
@@ -15,6 +16,7 @@ int main()
 	uart_send_string("Hello World.\n");
 	ret	= csel_test(0, 2);
 
+	adr_test();
 	bl_test();
 	bit_test();
 	add_test();
