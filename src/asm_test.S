@@ -154,7 +154,7 @@ bit_test:
 /* 	else */
 /* 		return b - 1; */
 /* } */
- csel_test, %function
+.type csel_test, %function
     .global csel_test
 csel_test:
     add x2, x1, #2
@@ -163,3 +163,20 @@ csel_test:
     csel x0, x2, x3, eq
     ret
     .size csel_test, (. - csel_test)
+
+.type bl_test2, %function
+    .global bl_test2
+bl_test2:
+    mov x1, #2
+    ret
+    .size bl_test2, (. - bl_test2)
+
+.type bl_test, %function
+    .global bl_test
+bl_test:
+    mov x0, #3
+    mov x3, x30
+    bl bl_test2
+    mov x30, x3
+    ret
+    .size bl_test, (. - bl_test)
