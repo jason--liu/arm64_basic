@@ -196,3 +196,23 @@ adr_test:
     add x4, x4, #:lo12:test_data1
     ret
     .size adr_test, (. - adr_test)
+
+    .data
+    .global my_data
+    .align 3   // On Armv8
+my_data:
+    .dword 0xdead889977   // 8bytes
+    .text
+.type atomic_write, %function
+    .global atomic_write
+atomic_write:
+    //adr x6, my_data // x6 store the address of my_data
+1:
+    ldxr x2, [x0]
+    //orr x2, x2, x0
+    mov x2, x1
+    stxr w3, x2, [x0]  // w3=0, success
+    cbnz w3, 1b
+    mov x0, x2
+    ret
+    .size atomic_write, (. - atomic_write)

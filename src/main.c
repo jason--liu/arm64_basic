@@ -8,14 +8,18 @@ extern void bit_test(void);
 extern int csel_test(int a, int b);
 extern int bl_test(void);
 extern int adr_test(void);
+extern unsigned long my_data;
+extern unsigned long atomic_write(void *addr, unsigned long val);
 
 int main()
 {
 	int ret = 0;
+	unsigned long ab;
 	uart_init();
 	uart_send_string("Hello World.\n");
-	ret	= csel_test(0, 2);
+	ret = csel_test(0, 2);
 
+	ab = atomic_write(&my_data, 0x55);
 	adr_test();
 	bl_test();
 	bit_test();
@@ -26,4 +30,3 @@ int main()
 	memcpy_32bytes();
 	return 0;
 }
-
