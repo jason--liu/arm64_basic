@@ -10,6 +10,7 @@ extern int bl_test(void);
 extern int adr_test(void);
 extern unsigned long my_data;
 extern unsigned long atomic_write(void *addr, unsigned long val);
+extern int call_macro(int a, int b);
 
 int main()
 {
@@ -17,6 +18,9 @@ int main()
 	unsigned long ab;
 	uart_init();
 	uart_send_string("Hello World.\n");
+
+	ret = call_macro(8, 9);
+
 	ret = csel_test(0, 2);
 
 	ab = atomic_write(&my_data, 0x55);

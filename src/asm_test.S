@@ -216,3 +216,32 @@ atomic_write:
     mov x0, x2
     ret
     .size atomic_write, (. - atomic_write)
+
+    .macro add_ma a, b, label
+    mov x0, \a
+    mov x1, \b
+    bl add_\()\label
+    .endm
+
+    .type add_1, %function
+add_1:
+    add x2, x1, #1
+    add x0, x0, x2
+    ret
+    .size add_1, (. - add_1)
+
+    .type add_2, %function
+add_2:
+    add x2, x1, #2
+    add x0, x0, x2
+    ret
+    .size add_2, (. - add_2)
+
+.type call_macro, %function
+    .global call_macro
+call_macro:
+    mov x6, x30
+    add_ma x0, x1, 1
+    mov x30, x6
+    ret
+    .size call_macro, (. - call_macro)
