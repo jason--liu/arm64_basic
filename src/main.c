@@ -12,6 +12,23 @@ extern unsigned long my_data;
 extern unsigned long atomic_write(void *addr, unsigned long val);
 extern int call_macro(int a, int b);
 
+static inline void mem_copy_32bytes()
+{
+	asm volatile("ldr x0, =0x80000 \n\t"
+		     "ldr x1, =0x200000 \n\t"
+		     "mov x2, #32 \n\t"
+		     "copy_loop: \n\t"
+		     "ldrb w3, [x0], #1 \n\t"
+		     "strb w3, [x1], #1 \n\t"
+		     "subs x2, x2, #1  \n\t"
+		     // compare to zero, if x2 !=0, coutinue
+		     "bne copy_loop \n\t"
+		     /* "ret" */
+		     : // no output
+		     : // no input
+		     : "memory");
+}
+
 int main()
 {
 	int ret = 0;
@@ -19,6 +36,7 @@ int main()
 	uart_init();
 	uart_send_string("Hello World.\n");
 
+	mem_copy_32bytes();
 	ret = call_macro(8, 9);
 
 	ret = csel_test(0, 2);
