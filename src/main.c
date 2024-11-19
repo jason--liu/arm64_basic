@@ -29,6 +29,26 @@ static inline void mem_copy_32bytes()
 		     : "memory");
 }
 
+#define read_sysreg(reg)                                                       \
+	({                                                                     \
+		unsigned long _val;                                            \
+		asm volatile("mrs %0, " #reg : "=r"(_val));                    \
+		_val;                                                          \
+	})
+
+#define write_sysreg(val, reg)                                                 \
+	({                                                                     \
+		unsigned long _val = (unsigned long)val;                       \
+		asm volatile("msr " #reg ", %x0" ::"rZ"(_val))                 \
+	})
+
+static void print_currentEL()
+{
+	unsigned long el;
+	el = read_sysreg(CurrentEL);
+	el = el >> 2;
+}
+
 int main()
 {
 	int ret = 0;
@@ -38,6 +58,7 @@ int main()
 
 	mem_copy_32bytes();
 	ret = call_macro(8, 9);
+	print_currentEL();
 
 	ret = csel_test(0, 2);
 

@@ -66,6 +66,7 @@ ldr_test:
 /**************pre-indexed or post-indexed addressing******************/
     // pre-index
     // x1 = x1 + 8, x6 = [0x80008]
+    mov x1, 0x80000
     ldr x6, [x1, #8]!
     // post-index
     // x7 = [0x80008], x1 = x1 + 8
